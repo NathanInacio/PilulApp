@@ -11,9 +11,7 @@ export default function TelaDeLogin({ navigation }) {
             secureTextEntry
             />
             <TouchableOpacity 
-                style={styles.botao} 
-                onPress={() => navigation.navigate('Inicio')}
-                >
+                style={styles.botao} onPress={() => navigation.navigate('Inicio')}>
                 <Text style={styles.botaoTexto}>Entrar!</Text>
             </TouchableOpacity>
         </View>
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 8,
+    borderRadius: 20,
     padding: 12,
     marginBottom: 16,
     width: '80%',
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
   botao: {
     backgroundColor: 'blue',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 20,
     alignItems: 'center',
     width: '80%',
   },
