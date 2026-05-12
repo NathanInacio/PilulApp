@@ -1,37 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { db } from '../config/firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 
 export default function TelaHome({ navigation }) {
-    const [idosos, setIdosos] = useState([
-        {
-            id: 1, 
-            nome: 'Urbano', 
-            idade: 86 + " anos", 
-            doenca: 'Diabetes', 
-            Obs: 'Nenhuma', 
-            Medicamento: [
-                { id: 1, nome: 'Metformina', dosagem: '500mg', horario: '08:00', quando: 'Terça, Quinta e Sabado' },
-                { id: 2, nome: 'Insulina', dosagem: '10 unidades', horario: '20:00', quando: 'Todo dia' },
-                { id: 3, nome: 'Glipizida', dosagem: '5mg', horario: '12:00', quando: 'Todo dia' },
-            ]},
-
-            
-        {
-            id: 2, 
-            nome: 'Neiva', 
-            idade: 82 + " anos", 
-            doenca: 'Hipertensão', 
-            obs: 'Nenhuma', 
-            Medicamento: [
-                { id: 1, nome: 'Losartana', dosagem: '50mg', horario: '08:00', quando: 'Seg, Qua e Sexta' },
-                { id: 2, nome: 'Hidroclorotiazida', dosagem: '25mg', horario: '20:00', quando: 'Todo dia' },
-                { id: 3, nome: 'Amlodipina', dosagem: '5mg', horario: '3 em 3 horas', quando: 'Todo dia' },
-            ]},
-
-        
-    ]);
-
+    const [idosos, setIdoso] = useState([]);
+    useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'idosos'), (snapshot) => {
+        const lista = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        setIdoso(lista);
+    });
+    return unsubscribe;
+}, []);
 
   return (
     <View style={styles.container}>
@@ -39,7 +23,8 @@ export default function TelaHome({ navigation }) {
       <Text style={styles.titulo}>Meus Idosos</Text>
 
 
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity 
+        style={styles.botao} onPress={() => navigation.navigate('Idoso')}>
         <Text style={styles.botaoTexto}>Adicionar Idoso</Text>
       </TouchableOpacity>
 
@@ -50,7 +35,7 @@ export default function TelaHome({ navigation }) {
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Med', { idoso: item })}>
             <Text style={styles.nomeIdoso}>{item.nome}</Text>
-            <Text style={styles.textIdoso}>Idade: {item.idade}</Text>
+            <Text style={styles.textIdoso}>Idade: {item.idade} anos</Text>
             <Text style={styles.textIdoso}>Doença: {item.doenca}</Text>
             <Text style={styles.textIdoso}>Observações: {item.obs}</Text>
           </TouchableOpacity>

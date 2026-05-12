@@ -6,6 +6,8 @@ import TelaDeLogin from "./screens/LoginScreen";
 import TelaHome from "./screens/HomeScreen";
 import TelaMed from "./screens/MedScreen";
 import TelaRegistro from "./screens/RegistroScreen";
+import IdosoScreen from "./screens/IdosoScreen";
+import AdicionarMedScreen from "./screens/AdicionarMedScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -17,8 +19,11 @@ export default function App() {
                 <Stack.Screen name="Entrar" component={TelaDeLogin} />
                 <Stack.Screen name="Registro" component={TelaRegistro} />
                 <Stack.Screen name="Inicio" component={TelaHome} />
+                <Stack.Screen name="Idoso" component={IdosoScreen} />
                 <Stack.Screen name="Med" component={TelaMed} /> 
+                <Stack.Screen name="AdicionarMed" component={AdicionarMedScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
+

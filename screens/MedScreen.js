@@ -1,28 +1,65 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { db } from '../config/firebase';
+import { collection, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
-export default function TelaMed({ route }) {
+export default function TelaMed({ route, navigation }) {
   const { idoso } = route.params;
+
+  const [medicamentos, setMedicamentos] = useState([]);
+
+  useEffect(() => {
+      const unsubscribe = onSnapshot(
+          collection(db, 'idosos', idoso.id, 'medicamentos'), 
+          (snapshot) => {
+              const lista = snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  ...doc.data()
+              }));
+              setMedicamentos(lista);
+          }
+      );
+      return unsubscribe;
+  }, []);
+
+  const deletarMedicamento = async (medicamentoId) => {
+    await deleteDoc(doc(db, 'idosos', idoso.id, 'medicamentos', medicamentoId));
+  };
+
 
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>{idoso.nome}</Text>
-      <Text style={styles.info}>Idade: {idoso.idade}</Text>
+      <Text style={styles.info}>Idade: {idoso.idade} anos</Text>
       <Text style={styles.info}>Doença: {idoso.doenca}</Text>
-      <Text style={styles.info}>Observações: {idoso.Obs}</Text>
+      <Text style={styles.info}>Observações: {idoso.obs}</Text>
 
       <Text style={styles.subtitulo}>Medicamentos:</Text>
 
+      <TouchableOpacity 
+        style={styles.botaoAdicionarMed}
+        onPress={() => navigation.navigate('AdicionarMed', { idosoId: idoso.id })}>
+        <Text style={styles.adicionarMedText}>Adicionar Medicamento</Text>
+      </TouchableOpacity>
+
+
       <FlatList
-        data={idoso.Medicamento}
-        keyExtractor={(item) => item.id.toString()}
+        data={medicamentos}
+        keyExtractor={(item, index) => item.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.nomeMed}>{item.nome}</Text>
+            <Text style={styles.nomeMed}>{item.remedio}</Text>
             <Text style={styles.textMed}>Dosagem: {item.dosagem}</Text>
             <Text style={styles.textMed}>Horário: {item.horario}</Text>
             <Text style={styles.textMed}>Quando: {item.quando}</Text>
+
+            <TouchableOpacity onPress={() => deletarMedicamento(item.id)}>
+              <Text style={styles.deletarMedText}>Deletar esse medicamento</Text>
+            </TouchableOpacity>
+
           </View>
+          
         )}
       />
     </View>
@@ -65,4 +102,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     },
-});
+    adicionarMedText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    },
+    botaoAdicionarMed: {
+    backgroundColor: 'gray',
+    padding: 12,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginBottom: 16,
+    },
+    deletarMedText: {
+    color: 'red',
+    fontWeight: 'bold',
+    },
+});  
+

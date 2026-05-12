@@ -50,7 +50,8 @@ export default function TelaDeLogin({ navigation }) {
                 <Text style={styles.registro}>Não tem uma conta? <Text style={styles.registro2}> Registre-se!</Text></Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={resetPassword}>
+            <TouchableOpacity 
+                onPress={resetPassword}>
                 <Text style={styles.resetSenha}>Esqueci minha senha</Text>
             </TouchableOpacity>
 
