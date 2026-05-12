@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { autenticacao } from '../config/firebase';
+import { sendEmailVerification } from 'firebase/auth';
 
 export default function RegistroScreen({navigation}) {
 
@@ -11,10 +12,12 @@ export default function RegistroScreen({navigation}) {
     const registrarUsuario = () => {
         createUserWithEmailAndPassword(autenticacao, email, senha)
             .then((userCredential) => {
+                sendEmailVerification(autenticacao.currentUser)
                 console.log('Usuário registrado com sucesso:', userCredential.user);
+                navigation.navigate('Entrar');
             })
             .catch((error) => {
-                console.error('Erro ao registrar usuário:', error);
+                console.error('Erro ao registrar usuário:', error.message);
             });
     };
 

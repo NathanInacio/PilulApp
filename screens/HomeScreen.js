@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
 
@@ -32,7 +32,7 @@ export default function TelaHome({ navigation }) {
         
     ]);
 
-    
+
   return (
     <View style={styles.container}>
 

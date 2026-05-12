@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { autenticacao } from '../config/firebase';
 
 
@@ -9,10 +9,21 @@ export default function TelaDeLogin({ navigation }) {
     const [senha, setSenha] = useState('');
 
     const logarUsuario = () => {
-      signInWithEmailAndPassword(autenticacao, email, senha)
-        .then(() => navigation.navigate('Inicio'))
-        .catch((error) => {console.error('Erro ao logar usuário:', error);
+        signInWithEmailAndPassword(autenticacao, email, senha)
+        .then(() => {
+          navigation.navigate('Inicio');
+        }).catch((error) => {
+          console.error('Erro ao logar usuário:', error.message);
         });
+    };
+
+    const resetPassword = () => {
+        sendPasswordResetEmail(autenticacao, email)
+            .then(() => {
+                console.log('Email enviado de recuperacao de senha.');
+            }).catch((error) => {
+                console.error('Erro ao enviar email:', error.message);
+            });
     };
 
     return (
@@ -37,6 +48,10 @@ export default function TelaDeLogin({ navigation }) {
             <TouchableOpacity 
                 onPress={() => navigation.navigate('Registro')}>
                 <Text style={styles.registro}>Não tem uma conta? <Text style={styles.registro2}> Registre-se!</Text></Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={resetPassword}>
+                <Text style={styles.resetSenha}>Esqueci minha senha</Text>
             </TouchableOpacity>
 
         </View>
@@ -83,6 +98,11 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
   },
+  resetSenha: {
+    color: 'red',
+    marginTop: 16,
+    fontSize: 12,
+  }
 
 
 
