@@ -31,6 +31,8 @@ export default function TelaHome({ navigation }) {
 
         
     ]);
+
+    
   return (
     <View style={styles.container}>
 
