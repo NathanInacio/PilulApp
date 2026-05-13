@@ -67,14 +67,12 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     inputIdoso: {
-        fontWeight: 'bold',
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 20,
         padding: 12,
         marginBottom: 16,
         width: '80%',
-//      backgroundColor: '', entender melhor a cor que pode ser usada aqui
     },
     botao: {
         backgroundColor: 'blue',

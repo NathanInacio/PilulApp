@@ -75,56 +75,56 @@ const styles = StyleSheet.create({
     flex: 1,    
     padding: 16,
     },
-    titulo: {
+  titulo: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
     alignSelf: 'center',
     },
-    info: {
+  info: {
     fontSize: 16,
     color: 'black',
     marginBottom: 8,
     },
-    subtitulo: {
+  subtitulo: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 16,
     marginBottom: 8,
     },
-    card: {
-    backgroundColor: '#ADADAD',
+  card: {
+    backgroundColor: '#6986d6a9',
     padding: 12,
     borderRadius: 20,
     marginBottom: 16,
     },
-    nomeMed: {
+  nomeMed: {
     fontSize: 18,
     fontWeight: 'bold', 
     },
-    textMed: {
+  textMed: {
     fontSize: 16,
     color: 'black',
     },
-    adicionarMedText: {
-    color: 'black',
+  adicionarMedText: {
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
     },
-    botaoAdicionarMed: {
-    backgroundColor: 'gray',
+  botaoAdicionarMed: {
+    backgroundColor: 'blue',
     padding: 12,
     borderRadius: 20,
     alignItems: 'center',
     marginBottom: 16,
     },
-    deletarMedText: {
+  deletarMedText: {
     color: 'red',
     fontWeight: 'bold',
     },
-    editarMedText: {
-        color: 'blue',
-        fontWeight: 'bold',
+  editarMedText: {
+    color: 'blue',
+    fontWeight: 'bold',
     },
 });  
 
