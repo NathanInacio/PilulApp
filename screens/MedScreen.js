@@ -55,7 +55,11 @@ export default function TelaMed({ route, navigation }) {
             <Text style={styles.textMed}>Quando: {item.quando}</Text>
 
             <TouchableOpacity onPress={() => deletarMedicamento(item.id)}>
-              <Text style={styles.deletarMedText}>Deletar esse medicamento</Text>
+              <Text style={styles.deletarMedText}>Deletar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('EditarMed', { medicamentos: item, idosoId: idoso.id })}>
+              <Text style={styles.editarMedText}>Editar</Text>
             </TouchableOpacity>
 
           </View>
@@ -117,6 +121,10 @@ const styles = StyleSheet.create({
     deletarMedText: {
     color: 'red',
     fontWeight: 'bold',
+    },
+    editarMedText: {
+        color: 'blue',
+        fontWeight: 'bold',
     },
 });  
 

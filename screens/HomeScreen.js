@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { db } from '../config/firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
 
 
 export default function TelaHome({ navigation }) {
@@ -16,6 +16,10 @@ export default function TelaHome({ navigation }) {
     });
     return unsubscribe;
 }, []);
+
+    const deletarIdoso = async (idosoId) => {
+    await deleteDoc(doc(db, 'idosos', idosoId));
+}
 
   return (
     <View style={styles.container}>
@@ -38,6 +42,15 @@ export default function TelaHome({ navigation }) {
             <Text style={styles.textIdoso}>Idade: {item.idade} anos</Text>
             <Text style={styles.textIdoso}>Doença: {item.doenca}</Text>
             <Text style={styles.textIdoso}>Observações: {item.obs}</Text>
+
+            <TouchableOpacity onPress={() => deletarIdoso(item.id)}>
+              <Text style={styles.deletarIdosoText}>Deletar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('EditarIdoso', { idoso: item })}>
+              <Text style={styles.editarIdosoText}>Editar</Text>
+            </TouchableOpacity>
+
           </TouchableOpacity>
 
         )}
@@ -61,19 +74,19 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     botao: {
-        backgroundColor: 'gray',
+        backgroundColor: 'blue',
         padding: 12,
         borderRadius: 20,
         alignItems: 'center',
         marginBottom: 16,
     },
     botaoTexto: {
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 16,
     },
     card: {
-        backgroundColor: '#ADADAD',
+        backgroundColor: '#6986d6a9',
         padding: 12,
         borderRadius: 20,
         marginBottom: 16,
@@ -85,5 +98,13 @@ const styles = StyleSheet.create({
     textIdoso: {
         fontSize: 16,
         color: 'black',
+    },
+    deletarIdosoText: {
+    color: 'red',
+    fontWeight: 'bold',
+    },
+    editarIdosoText: {
+        color: 'blue',
+        fontWeight: 'bold',
     },
 });
